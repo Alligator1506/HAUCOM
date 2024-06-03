@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AspNetCore.ReCaptcha;
+using AutoMapper;
 using ECommerceMVC.Data;
 using ECommerceMVC.Helpers;
 using ECommerceMVC.ViewModels;
@@ -28,10 +29,11 @@ namespace ECommerceMVC.Controllers
 			return View();
 		}
 
+		[ValidateReCaptcha]
 		[HttpPost]
 		public IActionResult DangKy(RegisterVM model, IFormFile Hinh)
 		{
-			if (ModelState.IsValid)
+			if (ModelState.IsValid )
 			{
 				try
 				{
@@ -55,6 +57,7 @@ namespace ECommerceMVC.Controllers
 					var mess = $"{ex.Message} shh";
 				}
 			}
+			TempData["Message"] = "Your form has been sent!";
 			return View();
 		}
 		#endregion

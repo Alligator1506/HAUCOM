@@ -1,4 +1,5 @@
-﻿using ECommerceMVC.Data;
+﻿using AspNetCore.ReCaptcha;
+using ECommerceMVC.Data;
 using ECommerceMVC.Helpers;
 using ECommerceMVC.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -40,6 +41,8 @@ builder.Services.AddSingleton(x => new PaypalClient(
 ));
 
 builder.Services.AddSingleton<IVnPayService, VnPayService>();
+
+builder.Services.AddReCaptcha(builder.Configuration.GetSection("ReCaptcha"));
 
 var app = builder.Build();
 

@@ -3,6 +3,16 @@
 	ViewData["Title"] = "Đăng ký";
 }
 
+@using AspNetCore.ReCaptcha
+@using Microsoft.Extensions.Options
+@inject IOptions<ReCaptchaSettings> ReCaptchaSettings
+
+<script>
+	function submitForm() {
+		document.forms[0].submit();
+	}
+</script>
+
 <div class="container-fluid py-5">
 	<div class="container py-5">
 		<h1 class="mb-4">Đăng ký Thành viên</h1>
@@ -61,9 +71,27 @@
 						<input type="file" name="Hinh" class="form-control" />
 					</div>
 				</div>
-				<div class="row g-4 text-center align-items-center justify-content-center pt-4">
-					<button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đăng ký</button>
+				<div class="form-group">
+					@switch (ReCaptchaSettings.Value.Version)
+					{
+						case ReCaptchaVersion.V2:
+						case ReCaptchaVersion.V3:
+							// Optionally override language of the recaptcha
+							// @Html.ReCaptcha(language: "en")
+							@Html.ReCaptcha()
+							break;
+						case ReCaptchaVersion.V2Invisible:
+							@Html.ReCaptcha("Submit Invisible ReCaptcha", className: "btn btn-primary", callback: "submitForm")
+							break;
+					}
 				</div>
+
+				@if (ReCaptchaSettings.Value.Version != ReCaptchaVersion.V2Invisible)
+				{
+					<div class="row g-4 text-center align-items-center justify-content-center pt-4">
+						<button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đăng ký</button>
+					</div>
+				}			
 			</div>
 		</form>
 	</div>

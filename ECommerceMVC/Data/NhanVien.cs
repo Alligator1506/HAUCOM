@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 namespace ECommerceMVC.Data;
-
 public partial class NhanVien
 {
     public string MaNv { get; set; } = null!;

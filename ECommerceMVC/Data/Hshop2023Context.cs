@@ -51,10 +51,6 @@ public partial class Hshop2023Context : DbContext
 
     public virtual DbSet<YeuThich> YeuThiches { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=.;Database=Hshop2023;Integrated Security=True;Trust Server Certificate=True");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<BanBe>(entity =>
@@ -152,7 +148,7 @@ public partial class Hshop2023Context : DbContext
         {
             entity.HasKey(e => e.MaHh).HasName("PK_Products");
 
-            entity.ToTable("HangHoa");
+            entity.ToTable("HangHoa", tb => tb.HasTrigger("SetNgaySX"));
 
             entity.Property(e => e.MaHh).HasColumnName("MaHH");
             entity.Property(e => e.DonGia).HasDefaultValue(0.0);
@@ -162,7 +158,6 @@ public partial class Hshop2023Context : DbContext
                 .HasColumnName("MaNCC");
             entity.Property(e => e.MoTaDonVi).HasMaxLength(50);
             entity.Property(e => e.NgaySx)
-                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("NgaySX");
             entity.Property(e => e.TenAlias).HasMaxLength(50);
@@ -193,7 +188,6 @@ public partial class Hshop2023Context : DbContext
                 .HasMaxLength(50)
                 .HasDefaultValue("Airline");
             entity.Property(e => e.DiaChi).HasMaxLength(60);
-            entity.Property(e => e.DienThoai).HasMaxLength(24);
             entity.Property(e => e.GhiChu).HasMaxLength(50);
             entity.Property(e => e.HoTen).HasMaxLength(50);
             entity.Property(e => e.MaKh)
