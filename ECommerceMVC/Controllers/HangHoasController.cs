@@ -58,9 +58,13 @@ namespace ECommerceMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaHh,TenHh,TenAlias,MaLoai,MoTaDonVi,DonGia,Hinh,NgaySx,GiamGia,SoLanXem,MoTa,MaNcc")] HangHoa hangHoa)
+        public async Task<IActionResult> Create([Bind("TenHh,TenAlias,MoTaDonVi,DonGia,Hinh,NgaySx,GiamGia,SoLanXem,MoTa")] HangHoa hangHoa)
         {
-            if (ModelState.IsValid)
+            hangHoa.MaLoai = 1002;
+            hangHoa.MaNcc = "NK";
+            hangHoa.NgaySx = DateTime.Now;
+
+            if (true)
             {
                 _context.Add(hangHoa);
                 await _context.SaveChangesAsync();
@@ -101,7 +105,7 @@ namespace ECommerceMVC.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (true)
             {
                 try
                 {
