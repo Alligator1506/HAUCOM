@@ -18,9 +18,7 @@ namespace ECommerceMVC.ViewComponents
 				TenLoai = lo.TenLoai,
 				SoLuong = lo.HangHoas.Count
 			}).OrderBy(p => p.TenLoai);
-
-			return View(data); // Default.cshtml
-			//return View("Default", data);
+			return View("Default", data);
 		}
 	}
 }

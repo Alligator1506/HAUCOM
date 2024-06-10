@@ -32,6 +32,7 @@ namespace ECommerceMVC.Controllers
 				MoTaNgan = p.MoTaDonVi ?? "",
 				TenLoai = p.MaLoaiNavigation.TenLoai
 			});
+
 			return View(result);
 		}
 

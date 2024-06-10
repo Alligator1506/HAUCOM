@@ -1,8 +1,9 @@
 ﻿@model ECommerceMVC.ViewModels.LoginVM
 @{
+	//Layout = "_LayoutShare";
 	ViewData["Title"] = "Đăng nhập";
 }
-<div class="container-fluid py-5">
+@* <div class="container-fluid py-5">
 	<div class="container py-5">
 		<h1 class="mb-4">Đăng nhập</h1>
 		<form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnUrl">
@@ -28,6 +29,60 @@
 				</div>
 			</div>
 		</form>
+	</div>
+</div> *@
+
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<div class="login100-pic js-tilt" data-tilt>
+				<img src="~/images/img-01.png" alt="IMG">
+			</div>
+
+			<form class="login100-form validate-form" asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnUrl">
+				<span class="login100-form-title">
+					Đăng nhập
+				</span>
+
+				<div class="wrap-input100 validate-input">
+					<input asp-for="@Model.UserName" name="username" type="text" class="input100" placeholder="Tài khoản">
+					<span class="focus-input100"></span>
+					<span class="symbol-input100">
+						<i class="fa fa-envelope" aria-hidden="true"></i>
+					</span>
+				</div>
+
+				<div class="wrap-input100 validate-input" data-validate="Password is required">
+					<input asp-for="@Model.Password" type="password" name="password" class="input100" placeholder="Mật khẩu">
+					<span class="focus-input100"></span>
+					<span class="symbol-input100">
+						<i class="fa fa-lock" aria-hidden="true"></i>
+					</span>
+				</div>
+
+				<div class="container-login100-form-btn">
+					<button type="submit" class="login100-form-btn">
+						Login
+					</button>
+				</div>
+
+				<div class="text-center p-t-12">
+					<span class="txt1">
+						Forgot
+					</span>
+					<a class="txt2" href="#">
+						Username / Password?
+					</a>
+				</div>
+
+				<div class="text-center p-t-136">
+					<a class="txt2" href="#">
+						Create your Account
+						<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+					</a>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 

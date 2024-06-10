@@ -1,4 +1,6 @@
-﻿using ECommerceMVC.Data;
+﻿using AutoMapper;
+using ECommerceMVC.Data;
+using ECommerceMVC.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -44,50 +46,44 @@ namespace ECommerceMVC.Controllers
         }
 
         // GET: AdminController/Create
-        public ActionResult CreateCategories()
+        public IActionResult Create()
         {
-            ViewBag.MaLoai = new SelectList(_context.Loais, "MaLoai", "MaLoai");
-            ViewBag.MaNcc = new SelectList(_context.NhaCungCaps, "MaNcc", "MaNcc");
+            ViewData["MaLoai"] = new SelectList(_context.Loais, "MaLoai", "MaLoai");
+            ViewData["MaNcc"] = new SelectList(_context.NhaCungCaps, "MaNcc", "MaNcc");
             return View();
         }
 
-        // POST: AdminController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateCategories([Bind("MaHh,TenHh,TenAlias,MaLoai,MoTaDonVi,DonGia,Hinh,NgaySx,GiamGia,SoLanXem,MoTa,MaNcc")] HangHoa hangHoa)
+        public async Task<IActionResult> Create([Bind("TenHh,TenAlias,MoTaDonVi,DonGia,Hinh,NgaySx,GiamGia,SoLanXem,MoTa")] HangHoa hangHoa)
         {
-            if (ModelState.IsValid)
+            //hangHoa.NgaySx = DateTime.Now;
+            //if (ModelState.IsValid)
+            //{
+            //    _context.HangHoas.Add(hangHoa);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Categories));
+            //}
+            //ViewData["MaLoai"] = new SelectList(_context.Loais, "MaLoai", "MaLoai", hangHoa.MaLoai);
+            //ViewData["MaNcc"] = new SelectList(_context.NhaCungCaps, "MaNcc", "MaNcc", hangHoa.MaNcc);
+            //return View(hangHoa);
+            hangHoa.MaLoai = 1002;
+            hangHoa.MaNcc = "NK";
+            hangHoa.NgaySx = DateTime.Now;
+
+            if (true)
             {
-                try
-                {
-                    // Kiểm tra xem NgaySX có giá trị null không, nếu có thì đặt giá trị mặc định
-                    if (hangHoa.NgaySx == null)
-                    {
-                        hangHoa.NgaySx = DateTime.Now; // Hoặc giá trị mặc định khác tùy vào logic của ứng dụng
-                    }
-
-                    _context.Add(hangHoa);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Categories));
-                }
-                catch (Exception ex)
-                {
-                    // Xử lý ngoại lệ
-                    Console.WriteLine(ex.Message);
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                }
+                _context.Add(hangHoa);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            // Nếu ModelState không hợp lệ, trả về view với dữ liệu đã nhập
-            ViewBag.MaLoai = new SelectList(_context.Loais, "MaLoai", "MaLoai", hangHoa.MaLoai);
-            ViewBag.MaNcc = new SelectList(_context.NhaCungCaps, "MaNcc", "MaNcc", hangHoa.MaNcc);
+            ViewData["MaLoai"] = new SelectList(_context.Loais, "MaLoai", "MaLoai", hangHoa.MaLoai);
+            ViewData["MaNcc"] = new SelectList(_context.NhaCungCaps, "MaNcc", "MaNcc", hangHoa.MaNcc);
             return View(hangHoa);
         }
 
-
-
         // GET: AdminController/Edit/5
-        public async Task<IActionResult> EditCategories(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -107,14 +103,14 @@ namespace ECommerceMVC.Controllers
         // POST: AdminController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCategories(int id, [Bind("MaHh,TenHh,TenAlias,MaLoai,MoTaDonVi,DonGia,Hinh,NgaySx,GiamGia,SoLanXem,MoTa,MaNcc")] HangHoa hangHoa)
+        public async Task<IActionResult> Edit(int id, [Bind("MaHh,TenHh,TenAlias,MaLoai,MoTaDonVi,DonGia,Hinh,NgaySx,GiamGia,SoLanXem,MoTa,MaNcc")] HangHoa hangHoa)
         {
             if (id != hangHoa.MaHh)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (true)
             {
                 try
                 {
@@ -132,7 +128,7 @@ namespace ECommerceMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Categories));
+                return RedirectToAction(nameof(Index));
             }
             ViewData["MaLoai"] = new SelectList(_context.Loais, "MaLoai", "MaLoai", hangHoa.MaLoai);
             ViewData["MaNcc"] = new SelectList(_context.NhaCungCaps, "MaNcc", "MaNcc", hangHoa.MaNcc);
@@ -140,7 +136,7 @@ namespace ECommerceMVC.Controllers
         }
 
         // GET: AdminController/Delete/5
-        public async Task<IActionResult> DeleteCategories(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -160,9 +156,9 @@ namespace ECommerceMVC.Controllers
         }
 
         // POST: AdminController/Delete/5
-        [HttpPost, ActionName("DeleteCategories")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteCategories(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var hangHoa = await _context.HangHoas.FindAsync(id);
             if (hangHoa != null)

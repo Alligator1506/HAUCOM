@@ -6,4 +6,5 @@
 		public string TenLoai { get; set; }
 		public int SoLuong { get; set; }
 	}
+
 }
