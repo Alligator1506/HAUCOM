@@ -53,20 +53,13 @@ namespace ECommerceMVC.Controllers
             return View();
         }
 
+        // POST: AdminController/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TenHh,TenAlias,MoTaDonVi,DonGia,Hinh,NgaySx,GiamGia,SoLanXem,MoTa")] HangHoa hangHoa)
         {
-            //hangHoa.NgaySx = DateTime.Now;
-            //if (ModelState.IsValid)
-            //{
-            //    _context.HangHoas.Add(hangHoa);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Categories));
-            //}
-            //ViewData["MaLoai"] = new SelectList(_context.Loais, "MaLoai", "MaLoai", hangHoa.MaLoai);
-            //ViewData["MaNcc"] = new SelectList(_context.NhaCungCaps, "MaNcc", "MaNcc", hangHoa.MaNcc);
-            //return View(hangHoa);
             hangHoa.MaLoai = 1002;
             hangHoa.MaNcc = "NK";
             hangHoa.NgaySx = DateTime.Now;
